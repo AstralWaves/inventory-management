@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forecast - Inventory Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="forecast-page">
+    <header class="header">
+        <div class="header-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar" class="btn-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+            </button>
+            <h1 class="app-title">Inventory Management</h1>
+        </div>
+        <div class="header-right">
+            <div class="search-bar">
+                <input type="search" placeholder="Search products..." aria-label="Search products">
+                <button type="button" aria-label="Search" class="btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21l-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="actions">
+                <button type="button" class="btn btn-outline" id="exportBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export Report
+                </button>
+                <button type="button" class="btn btn-primary" id="printBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    Print
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" aria-label="Main Navigation">
+        <div id="sidebarContent"></div>
+    </nav>
+
+    <main class="main-content">
+        <nav aria-label="Breadcrumb" class="breadcrumb">
+            <ol>
+                <li><a href="dashboard.html">Home</a></li>
+                <li aria-current="page">Forecast</li>
+            </ol>
+        </nav>
+
+        <div class="forecast-controls">
+            <div class="forecast-filters">
+                <div class="form-group">
+                    <label for="forecastRange">Forecast Range</label>
+                    <select id="forecastRange" class="form-control">
+                        <option value="7">Next 7 Days</option>
+                        <option value="30" selected>Next 30 Days</option>
+                        <option value="90">Next 90 Days</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="confidenceLevel">Confidence Level</label>
+                    <select id="confidenceLevel" class="form-control">
+                        <option value="80">80%</option>
+                        <option value="90" selected>90%</option>
+                        <option value="95">95%</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="forecast-parameters">
+                <div class="form-group">
+                    <label for="leadTime">Lead Time (days)</label>
+                    <input type="range" id="leadTime" min="1" max="30" value="7" class="range-slider">
+                    <output for="leadTime">7</output>
+                </div>
+                <div class="form-group">
+                    <label for="safetyStock">Safety Stock Level (%)</label>
+                    <input type="range" id="safetyStock" min="10" max="50" value="20" class="range-slider">
+                    <output for="safetyStock">20</output>
+                </div>
+            </div>
+        </div>
+
+        <div class="forecast-visualization">
+            <div class="chart-container">
+                <canvas id="trendChart" aria-label="Sales Trend Chart" role="img"></canvas>
+            </div>
+        </div>
+
+        <div class="forecast-table-container">
+            <table class="forecast-table" aria-label="Forecast Report">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Current Stock</th>
+                        <th scope="col">Predicted Demand</th>
+                        <th scope="col">Confidence</th>
+                        <th scope="col">Suggested Stock</th>
+                        <th scope="col">Trend</th>
+                    </tr>
+                </thead>
+                <tbody id="forecastTableBody">
+                    <tr class="loading-row">
+                        <td colspan="6">Loading forecast data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <aside class="forecast-insights">
+            <div class="insights-panel">
+                <h2>Reorder Suggestions</h2>
+                <div id="reorderSuggestions" class="suggestions-list">
+                    <div class="loading-state">Calculating suggestions...</div>
+                </div>
+            </div>
+
+            <div class="insights-panel">
+                <h2>Demand Signals</h2>
+                <div id="demandSignals" class="signals-list">
+                    <div class="loading-state">Analyzing demand signals...</div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <div id="errorContainer" class="error-container hidden" role="alert"></div>
+
+    <script type="module" src="js/menu.js"></script>
+    <script type="module" src="js/forecast.js"></script>
+</body>
+</html>

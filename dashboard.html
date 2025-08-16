@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Inventory Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-page">
+    <header class="header">
+        <div class="header-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar" class="btn-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+            </button>
+            <h1 class="app-title">Inventory Management</h1>
+        </div>
+        <div class="header-right">
+            <div class="search-bar">
+                <input type="search" placeholder="Search..." aria-label="Search">
+                <button type="button" aria-label="Search" class="btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21l-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="notifications">
+                <button type="button" aria-label="Notifications" class="btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="badge">3</span>
+                </button>
+            </div>
+            <div class="user-menu">
+                <button type="button" aria-label="User Menu" class="btn-icon">
+                    <img src="assets/avatar.svg" alt="User Avatar" class="avatar">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" aria-label="Main Navigation">
+        <div id="sidebarContent"></div>
+    </nav>
+
+    <main class="main-content">
+        <nav aria-label="Breadcrumb" class="breadcrumb">
+            <ol>
+                <li><a href="#">Home</a></li>
+                <li aria-current="page">Dashboard</li>
+            </ol>
+        </nav>
+
+        <div class="dashboard-filters" id="dashboardFilters">
+            <form class="filters-form">
+                <div class="form-group">
+                    <label for="dateRange">Date Range</label>
+                    <select id="dateRange" class="form-control">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="supplier">Supplier</label>
+                    <select id="supplier" class="form-control">
+                        <option value="all">All Suppliers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location" class="form-control">
+                        <option value="all">All Locations</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </form>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card" id="totalSKUs">
+                <div class="card-content">
+                    <span class="icon">📦</span>
+                    <div class="value">0</div>
+                    <div class="label">Total SKUs</div>
+                </div>
+            </div>
+            <div class="card" id="inStockUnits">
+                <div class="card-content">
+                    <span class="icon">📊</span>
+                    <div class="value">0</div>
+                    <div class="label">In-Stock Units</div>
+                </div>
+            </div>
+            <div class="card" id="lowStockAlerts">
+                <div class="card-content">
+                    <span class="icon">⚠️</span>
+                    <div class="value">0</div>
+                    <div class="label">Low Stock Alerts</div>
+                </div>
+            </div>
+            <div class="card" id="openPOs">
+                <div class="card-content">
+                    <span class="icon">📋</span>
+                    <div class="value">0</div>
+                    <div class="label">Open POs</div>
+                </div>
+            </div>
+            <div class="card" id="upcomingDeliveries">
+                <div class="card-content">
+                    <span class="icon">🚚</span>
+                    <div class="value">0</div>
+                    <div class="label">Upcoming Deliveries</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-charts">
+            <div class="chart-container">
+                <canvas id="stockChart" aria-label="Stock Levels Chart" role="img"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="forecastChart" aria-label="Demand Forecast Chart" role="img"></canvas>
+            </div>
+        </div>
+
+        <div class="dashboard-feeds">
+            <section class="alerts-feed" aria-labelledby="alertsTitle">
+                <h2 id="alertsTitle">Alerts</h2>
+                <div id="alertsFeed" class="feed-content">
+                    <div class="empty-state">No alerts to display</div>
+                </div>
+            </section>
+
+            <section class="updates-feed" aria-labelledby="updatesTitle">
+                <h2 id="updatesTitle">Recent Updates</h2>
+                <div id="recentUpdates" class="feed-content">
+                    <div class="empty-state">No updates to display</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="errorContainer" class="error-container hidden" role="alert"></div>
+
+    <script type="module" src="js/menu.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Inventory Management System</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-background">
+    <div id="auth-section" class="container flex items-center justify-center min-h-screen">
+        <div class="card animate-fadeIn w-full max-w-md">
+            <h2 id="auth-title" class="text-2xl font-bold mb-6 text-center text-text"></h2>
+            
+            <form id="auth-form" class="space-y-4" novalidate>
+                <div class="form-group">
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text" 
+                           id="username" 
+                           class="input" 
+                           placeholder="Username"
+                           required 
+                           autocomplete="username"
+                           aria-label="Username">
+                    <div class="error-message" id="username-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="sr-only">Password</label>
+                    <div class="relative">
+                        <input type="password" 
+                               id="password" 
+                               class="input pr-10" 
+                               placeholder="Password"
+                               required
+                               autocomplete="current-password"
+                               aria-label="Password">
+                        <button type="button" 
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-text-light"
+                                id="toggle-password"
+                                aria-label="Toggle password visibility">
+                            👁️
+                        </button>
+                    </div>
+                    <div class="error-message" id="password-error"></div>
+                    <div class="password-strength" id="password-strength"></div>
+                </div>
+
+                <div id="register-fields" class="space-y-4 hidden">
+                    <div class="form-group">
+                        <label for="name" class="sr-only">Full Name</label>
+                        <input type="text" 
+                               id="name" 
+                               class="input" 
+                               placeholder="Full Name"
+                               autocomplete="name"
+                               aria-label="Full Name">
+                        <div class="error-message" id="name-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email</label>
+                        <input type="email" 
+                               id="email" 
+                               class="input" 
+                               placeholder="Email"
+                               autocomplete="email"
+                               aria-label="Email">
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password" class="sr-only">Confirm Password</label>
+                        <input type="password" 
+                               id="confirm-password" 
+                               class="input" 
+                               placeholder="Confirm Password"
+                               autocomplete="new-password"
+                               aria-label="Confirm Password">
+                        <div class="error-message" id="confirm-password-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role" class="sr-only">Role</label>
+                        <select id="role" 
+                                class="input" 
+                                aria-label="Select Role">
+                            <option value="">Select Role</option>
+                            <option value="manager">Manager</option>
+                            <option value="purchaser">Purchaser</option>
+                            <option value="salesperson">Salesperson</option>
+                            <option value="warehouse">Warehouse Staff</option>
+                        </select>
+                        <div class="error-message" id="role-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" 
+                                   id="terms" 
+                                   class="form-checkbox" 
+                                   aria-label="Accept Terms and Conditions">
+                            <span class="text-sm text-text-light">I accept the terms and conditions</span>
+                        </label>
+                        <div class="error-message" id="terms-error"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" 
+                               id="remember-me" 
+                               class="form-checkbox" 
+                               aria-label="Remember me">
+                        <span class="text-sm text-text-light">Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" 
+                        class="btn btn-primary w-full"
+                        id="submit-btn">
+                    <span id="button-text">Login</span>
+                    <span id="button-loader" class="loading hidden"></span>
+                </button>
+            </form>
+
+            <p class="mt-4 text-center text-sm">
+                <a href="#" 
+                   id="toggle-auth" 
+                   class="text-primary hover:underline"
+                   role="button"
+                   tabindex="0">Create an account</a>
+            </p>
+
+            <div id="toast" class="toast hidden" role="alert" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <script src="../js/i18n.js" type="module"></script>
+    <script src="../js/api.js" type="module"></script>
+    <script src="../js/auth.js" type="module"></script>
+</body>
+</html>
